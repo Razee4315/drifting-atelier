@@ -16,7 +16,7 @@
 
 Most art websites are grids. Boxes inside boxes. Polite. Predictable. This is not that.
 
-The Drifting Atelier is an **infinite paper canvas** where art from every era of human history floats together. Cave handprints next to Polaroids. A child's crayon dragon next to a Renaissance hand study. Pressed flowers, ukiyo-e prints, surrealist apples, art deco posters, scribbled napkin doodles. **141 pieces, all AI-generated with ChatGPT image 2.0 (2026 model), all on transparent backgrounds, all draggable.**
+The Drifting Atelier is an **infinite paper canvas** where art from every era of human history floats together. Cave handprints next to Polaroids. A child's crayon dragon next to a Renaissance hand study. Pressed flowers, ukiyo-e prints, surrealist apples, art deco posters, scribbled napkin doodles. **117 pieces, all AI-generated with ChatGPT image 2.0 (2026 model), all on transparent backgrounds, all draggable. And you can drop your own.**
 
 You can pan, zoom, grab any piece, throw it, double-click it for a handwritten note, and the whole thing remembers what you did and brings it back next visit.
 
@@ -30,11 +30,11 @@ The vibe target: an **artist's attic studio** where the walls and floor are cove
 
 Then I had to figure out how to actually build it.
 
-## How the 141 Images Got Made
+## How the 117 Images Got Made
 
 Honestly? **ChatGPT image 2.0 (2026 model) was a beast.** Most pieces came out clean on the very first shot — the right aesthetic, the right transparent background, the right size. The model just *got it*.
 
-But "first shot" doesn't mean "fast." With 141 images across 9 different style zones (cave painting → ukiyo-e → child's crayon → Renaissance → Polaroid), the volume itself was the work. I ran the generations through **Codex across many separate sessions** — batching prompts by zone so each session could keep one consistent aesthetic in mind.
+But "first shot" doesn't mean "fast." With 117 images across 9 different style zones (cave painting → ukiyo-e → child's crayon → Renaissance → Polaroid), the volume itself was the work. I ran the generations through **Codex across many separate sessions** — batching prompts by zone so each session could keep one consistent aesthetic in mind.
 
 What actually ate the time:
 - Writing tight, specific prompts for every single piece up front so the pack reads as one body of work, not a stock-image pile
@@ -66,9 +66,15 @@ The asset pack alone took as long as the website.
 
 - **Infinite pan + zoom canvas** (Pixi.js v8, WebGL)
 - **Every piece is draggable, throwable** with proper inertia and friction
+- **Drop your own image** anywhere on the canvas — it gets washi-taped at the drop spot, becomes a piece, persists in your localStorage
+- **Take a polaroid** of your view (P key) — frames it with handwritten title + date, downloads as PNG
+- **Cmd/Ctrl+K fuzzy search** any piece by name or zone, fly the camera to it
+- **Mini-map** in the bottom-right shows all 9 zones; click any to fast-travel
+- **Discovery glow + chime** the first time you wander into each zone, with a "discovered ___" toast
+- **Music shifts by zone** — warmer in The Cave, brighter in The Garden, lo-fi in The Static, dreamy in The Float (smooth EQ glide between rooms)
 - **Hover lifts pieces** and tilts them subtly toward your cursor
 - **Double-click any piece** for a handwritten artist note about it
-- **Hand-drawn pencil cursor** that leaves a faint graphite trail
+- **Hand-drawn pencil cursor** that leaves a faint graphite trail (auto-hidden on touch)
 - **Scatter-mode picker** on first visit — choose how the studio greets you (drift / by era / tight / wild)
 - **Your arrangement is saved** — move things, refresh, they stay where you put them
 - **Real ambient music** (CC0 from Pixabay, two tracks that crossfade so it never loops)
@@ -104,7 +110,7 @@ No backend. Static deploy. Works on any host.
 
 ## Asset Credits
 
-All 141 PNG images were generated using **ChatGPT image 2.0 (2026 model)**, run through **Codex** across many sessions, and individually curated by hand. The two ambient music tracks are CC0 from [Pixabay](https://pixabay.com/music/). Fonts (Cormorant Garamond, Caveat, Special Elite) are from Google Fonts.
+All 117 PNG images were generated using **ChatGPT image 2.0 (2026 model)**, run through **Codex** across many sessions, and individually curated by hand. The two ambient music tracks are CC0 from [Pixabay](https://pixabay.com/music/). Fonts (Cormorant Garamond, Caveat, Special Elite) are from Google Fonts.
 
 If you want the asset pack on its own, holler — I'll split it into a separate repo with prompts.json so you can extend it.
 
