@@ -37,6 +37,8 @@
       <div id="hud-controls">
         <button id="btn-search" title="Search (Ctrl/Cmd+K)">⌕</button>
         <button id="btn-polaroid" title="Take a polaroid (P)">⊡</button>
+        <button id="btn-add-note" title="Add a sticky note (N)">✎</button>
+        <button id="btn-share" title="Share this canvas">↗</button>
         <button id="btn-zoom-out" title="Zoom out (−)">−</button>
         <button id="btn-zoom-in" title="Zoom in (+)">+</button>
         <button id="btn-reset" title="Recenter (R)">⤴</button>
@@ -48,6 +50,42 @@
     <div id="minimap" class="minimap" title="zones — click to fly">
       <div class="minimap-viewport" id="minimap-viewport"></div>
       <!-- Zone dots populated by JS -->
+    </div>
+
+    <!-- Share modal -->
+    <div id="share-modal" class="share-modal hidden">
+      <div class="share-card">
+        <button class="share-close" data-close>×</button>
+        <p class="share-eyebrow">a gift —</p>
+        <h2>share your studio</h2>
+        <p class="share-sub" id="share-sub">a link they can open in any browser. no sign-up. they wander through what you made.</p>
+
+        <div class="share-mode" id="share-mode-picker">
+          <label class="share-mode-row">
+            <input type="text" id="share-from" placeholder="from… (optional)" maxlength="40" />
+          </label>
+          <label class="share-mode-row">
+            <input type="text" id="share-to" placeholder="to… (optional)" maxlength="40" />
+          </label>
+          <label class="share-mode-row">
+            <input type="text" id="share-message" placeholder="a short note for them (optional)" maxlength="120" />
+          </label>
+        </div>
+
+        <div class="share-status" id="share-status"></div>
+
+        <div class="share-link-row hidden" id="share-link-row">
+          <input type="text" id="share-link" readonly />
+          <button id="share-copy">copy</button>
+        </div>
+
+        <div class="share-actions">
+          <button id="share-make" class="pol-btn pol-save">make link</button>
+          <button class="pol-btn" data-close>close</button>
+        </div>
+
+        <p class="share-foot">stored on a free Cloudflare backend if configured, or packed into the URL itself for tiny canvases.</p>
+      </div>
     </div>
 
     <!-- Search modal (Cmd/Ctrl+K) -->
@@ -74,34 +112,55 @@
           <div class="welcome-tape welcome-tape-tl"></div>
 
           <h1>the drifting atelier</h1>
-          <p class="welcome-sub">an attic of art from every age — drag, throw, double-tap.</p>
+          <p class="welcome-sub">an attic of art — or make one for someone you love.</p>
 
-          <div class="mode-picker">
-            <p class="mode-label">arrange the studio:</p>
-            <div class="mode-grid">
-              <button class="mode-card" data-mode="drift">
-                <span class="mode-name">drift</span>
-                <span class="mode-desc">organic, by era</span>
-              </button>
-              <button class="mode-card" data-mode="timeline">
-                <span class="mode-name">by era</span>
-                <span class="mode-desc">timeline, west→east</span>
-              </button>
-              <button class="mode-card" data-mode="constellation">
-                <span class="mode-name">tight</span>
-                <span class="mode-desc">curated exhibit</span>
-              </button>
-              <button class="mode-card" data-mode="wild">
-                <span class="mode-name">wild</span>
-                <span class="mode-desc">papers in the wind</span>
-              </button>
-            </div>
+          <div class="welcome-tabs">
+            <button class="welcome-tab active" data-tab="explore">explore</button>
+            <button class="welcome-tab" data-tab="create">make one</button>
           </div>
 
-          <button id="welcome-enter">
-            <span>enter</span>
-            <span class="enter-arrow">→</span>
-          </button>
+          <!-- EXPLORE TAB: pick a scatter mode for the curated 117-piece studio -->
+          <div class="tab-panel" data-panel="explore">
+            <div class="mode-picker">
+              <p class="mode-label">arrange the studio:</p>
+              <div class="mode-grid">
+                <button class="mode-card" data-mode="drift">
+                  <span class="mode-name">drift</span>
+                  <span class="mode-desc">organic, by era</span>
+                </button>
+                <button class="mode-card" data-mode="timeline">
+                  <span class="mode-name">by era</span>
+                  <span class="mode-desc">timeline, west→east</span>
+                </button>
+                <button class="mode-card" data-mode="constellation">
+                  <span class="mode-name">tight</span>
+                  <span class="mode-desc">curated exhibit</span>
+                </button>
+                <button class="mode-card" data-mode="wild">
+                  <span class="mode-name">wild</span>
+                  <span class="mode-desc">papers in the wind</span>
+                </button>
+              </div>
+            </div>
+            <button id="welcome-enter">
+              <span>enter</span>
+              <span class="enter-arrow">→</span>
+            </button>
+          </div>
+
+          <!-- CREATE TAB: empty canvas to build something for someone -->
+          <div class="tab-panel hidden" data-panel="create">
+            <p class="create-intro">a blank cream canvas. drop photos.<br/>write notes. share with anyone.</p>
+            <ul class="create-steps">
+              <li><b>drop</b> photos right onto the page</li>
+              <li><b>add</b> handwritten sticky notes</li>
+              <li><b>share</b> a link — they wander through it</li>
+            </ul>
+            <button id="welcome-create" class="welcome-cta">
+              <span>start fresh</span>
+              <span class="enter-arrow">→</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

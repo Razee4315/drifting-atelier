@@ -339,6 +339,98 @@ canvas {
   font-style: italic;
 }
 
+/* ---------- Welcome tabs ---------- */
+
+.welcome-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid rgba(61, 46, 31, 0.18);
+}
+
+.welcome-tab {
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: var(--ink);
+  opacity: 0.5;
+  cursor: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all 0.15s;
+}
+.welcome-tab:hover { opacity: 0.8; }
+.welcome-tab.active {
+  opacity: 1;
+  border-bottom-color: var(--ink);
+}
+
+.tab-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.tab-panel.hidden { display: none; }
+
+.create-intro {
+  font-family: 'Caveat', cursive !important;
+  font-size: 20px !important;
+  margin: 4px 0 12px !important;
+  line-height: 1.3 !important;
+  color: var(--ink);
+  opacity: 0.75 !important;
+  text-align: center;
+}
+
+.create-steps {
+  margin: 0 0 16px;
+  padding: 0 4px 0 22px;
+  font-family: 'Special Elite', monospace;
+  font-size: 12.5px;
+  line-height: 1.8;
+  color: var(--ink);
+  opacity: 0.78;
+  list-style: '— ';
+}
+.create-steps b {
+  font-weight: normal;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 14px;
+}
+
+.welcome-cta {
+  width: 100%;
+  padding: 11px 20px;
+  border: 1.5px solid var(--ink);
+  background: var(--rose);
+  color: var(--ink);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  font-style: italic;
+  cursor: none;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.welcome-cta .enter-arrow { font-style: normal; transition: transform 0.2s; }
+.welcome-cta:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.welcome-cta:hover .enter-arrow { transform: translateX(4px); }
+.welcome-cta:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
 /* ---------- Mode picker ---------- */
 
 .mode-picker {
@@ -498,6 +590,283 @@ canvas {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.15s, transform 0.18s;
+}
+
+/* ---------- Share modal ---------- */
+
+.share-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 320;
+  background: rgba(61, 46, 31, 0.42);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4vh 16px;
+  transition: opacity 0.22s, visibility 0.22s;
+}
+.share-modal.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.share-card {
+  position: relative;
+  width: 460px;
+  max-width: 92vw;
+  max-height: 92vh;
+  overflow-y: auto;
+  background: var(--paper);
+  padding: 30px 36px 24px;
+  border: 1.5px solid var(--ink);
+  box-shadow: 8px 12px 0 rgba(61, 46, 31, 0.18);
+  transform: rotate(-0.6deg);
+}
+
+.share-close {
+  position: absolute;
+  top: 8px; right: 12px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: var(--ink);
+  opacity: 0.5;
+  cursor: none;
+  padding: 4px 10px;
+  line-height: 1;
+}
+.share-close:hover { opacity: 1; }
+
+.share-eyebrow {
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  margin: 0 0 4px;
+  color: var(--ink);
+  opacity: 0.55;
+  font-style: italic;
+}
+
+.share-card h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 32px;
+  margin: 0 0 6px;
+  color: var(--ink);
+}
+
+.share-sub {
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  margin: 0 0 18px;
+  color: var(--ink);
+  opacity: 0.65;
+  line-height: 1.35;
+}
+
+.share-mode-row {
+  display: block;
+  margin-bottom: 8px;
+}
+.share-mode-row input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1.2px solid rgba(61, 46, 31, 0.35);
+  background: rgba(255, 255, 255, 0.6);
+  font-family: 'Special Elite', monospace;
+  font-size: 13px;
+  color: var(--ink);
+  outline: none;
+}
+.share-mode-row input:focus {
+  border-color: var(--ink);
+  background: white;
+}
+.share-mode-row input::placeholder { color: rgba(61, 46, 31, 0.4); }
+
+.share-status {
+  margin: 14px 0 4px;
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  color: var(--ink);
+  opacity: 0.7;
+  min-height: 24px;
+  text-align: center;
+}
+.share-status.error { color: #B8504A; }
+
+.share-link-row {
+  display: flex;
+  gap: 6px;
+  margin: 10px 0 14px;
+}
+.share-link-row.hidden { display: none; }
+.share-link-row input {
+  flex: 1;
+  padding: 9px 12px;
+  border: 1.5px solid var(--ink);
+  background: var(--sun);
+  font-family: 'Special Elite', monospace;
+  font-size: 12px;
+  color: var(--ink);
+  outline: none;
+  cursor: text;
+}
+#share-copy {
+  padding: 9px 16px;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink);
+  cursor: none;
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: all 0.15s;
+}
+#share-copy:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.share-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+.share-actions .pol-btn { flex: 1; }
+
+.share-foot {
+  margin: 16px 0 0;
+  font-family: 'Special Elite', monospace;
+  font-size: 9.5px;
+  color: var(--ink);
+  opacity: 0.4;
+  text-align: center;
+  letter-spacing: 0.2px;
+  line-height: 1.4;
+}
+
+/* ---------- Note composer ---------- */
+
+.note-composer {
+  position: fixed;
+  inset: 0;
+  z-index: 320;
+  background: rgba(61, 46, 31, 0.42);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.note-composer-card {
+  background: var(--paper);
+  padding: 22px;
+  border: 1.5px solid var(--ink);
+  box-shadow: 6px 9px 0 rgba(61, 46, 31, 0.18);
+  width: 360px;
+  max-width: 92vw;
+  transform: rotate(-1deg);
+}
+.note-color-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  justify-content: center;
+}
+.note-color {
+  width: 32px; height: 32px;
+  border: 2px solid;
+  cursor: none;
+  transition: transform 0.15s;
+}
+.note-color:hover { transform: scale(1.1); }
+.note-color.selected {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 2px var(--ink);
+}
+#note-text {
+  width: 100%;
+  height: 110px;
+  padding: 10px 12px;
+  border: 1.2px solid rgba(61, 46, 31, 0.35);
+  background: rgba(255, 255, 255, 0.85);
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  color: var(--ink);
+  resize: none;
+  outline: none;
+  line-height: 1.3;
+}
+#note-text:focus { border-color: var(--ink); background: white; }
+.note-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.note-actions .pol-btn { flex: 1; }
+
+/* ---------- Greeting banner (when opening a shared canvas) ---------- */
+
+.greeting-banner {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-12px);
+  z-index: 200;
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  box-shadow: 4px 6px 0 rgba(61, 46, 31, 0.2);
+  padding: 14px 32px 16px;
+  max-width: 88vw;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.5s, transform 0.5s cubic-bezier(0.2, 1.3, 0.3, 1);
+  cursor: pointer;
+}
+.greeting-banner.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.greeting-banner::before {
+  content: '';
+  position: absolute;
+  top: -10px; left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
+  width: 80px; height: 16px;
+  background: var(--tape-yellow);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+.gb-eyebrow {
+  font-family: 'Caveat', cursive;
+  font-size: 14px;
+  color: var(--ink);
+  opacity: 0.5;
+  display: block;
+  margin-bottom: 2px;
+}
+.gb-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 22px;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+.gb-message {
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  color: var(--ink);
+  opacity: 0.78;
+  line-height: 1.3;
+  margin: 0;
+}
+.gb-close {
+  position: absolute;
+  top: 6px; right: 10px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: var(--ink);
+  opacity: 0.4;
+  cursor: none;
 }
 
 /* ---------- Search modal ---------- */

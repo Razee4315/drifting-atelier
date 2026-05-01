@@ -35,10 +35,24 @@ const TIMELINE_X = {
 };
 
 export function placeIntoZones(pieces, zones, mode = 'drift') {
+  if (mode === 'empty' || mode === 'shared') return placeEmpty(pieces);
   if (mode === 'wild') return placeWild(pieces);
   if (mode === 'timeline') return placeTimeline(pieces);
   if (mode === 'constellation') return placeConstellation(pieces, zones);
   return placeDrift(pieces, zones);
+}
+
+// ---------- EMPTY (start fresh) ----------
+
+function placeEmpty(pieces) {
+  // Hide all built-in pieces far off-screen at near-zero scale.
+  // The user's added pieces (custom uploads + sticky notes) live alongside
+  // them in the same array but have isUser/isNote flags; main.js sets those
+  // visible at sensible positions.
+  for (const p of pieces) {
+    p.x = 999999; p.y = 999999;
+    p.scale = 0.001;
+  }
 }
 
 // ---------- DRIFT (default) ----------

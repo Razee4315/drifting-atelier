@@ -19,6 +19,9 @@ import { setupSearch } from './search.js';
 import { setupPolaroid } from './polaroid.js';
 import { setupUserDrop, loadUserPieces } from './userpieces.js';
 import { setupDiscovery, checkDiscovery, showDiscoveryToast } from './discovery.js';
+import { setupStickyNotes, renderNoteToDataUrl, getNoteColor } from './stickynote.js';
+import { setupShare } from './share.js';
+import { loadFromUrl } from './storage.js';
 
 // Resolve absolute /asset paths under whatever base path the app is served at
 // (e.g. "/" in dev, "/drifting-atelier/" on GitHub Pages).
@@ -91,36 +94,90 @@ async function main() {
   // 5. Build paper background tile
   buildPaperBackground();
 
-  // 6. Create pieces and lay them out (then apply any saved curation)
+  // 6. Check if a shared canvas was opened via URL (?c=ID or #s=...)
+  const shared = await loadFromUrl();
+
+  // 6a. Create + place built-in pieces
   pieces = await createPieces();
-  const savedMode = loadMode() || 'drift';
-  placeIntoZones(pieces, manifest.zones, savedMode);
-  const saved = loadLayout();
-  if (saved) {
-    const applied = applySavedLayout(pieces, saved);
-    console.log(`Restored ${applied} piece positions from your previous visit.`);
+  const savedMode = shared ? 'shared' : (loadMode() || 'drift');
+  if (savedMode === 'empty' || savedMode === 'shared') {
+    // No layout pass; pieces will be positioned individually below
+    for (const p of pieces) { p.x = 0; p.y = 0; p.scale = 0; }
+  } else {
+    placeIntoZones(pieces, manifest.zones, savedMode);
+    const saved = loadLayout();
+    if (saved) {
+      const applied = applySavedLayout(pieces, saved);
+      console.log(`Restored ${applied} piece positions from your previous visit.`);
+    }
+  }
+
+  // If we opened a shared canvas, apply the sender's positions to the
+  // built-in pieces and stash the metadata for the greeting banner.
+  if (shared) {
+    const byId = Object.fromEntries(pieces.map(p => [p.id, p]));
+    for (const b of (shared.builtin || [])) {
+      const p = byId[b.id];
+      if (!p) continue;
+      p.x = b.x; p.y = b.y; p.rot = b.rot; p.scale = b.scale;
+      if (typeof b.z === 'number') p.zIndex = b.z;
+    }
+    // Pieces NOT mentioned by the shared canvas are hidden (off-screen)
+    for (const p of pieces) {
+      if (p.scale === 0) { p.x = 999999; p.y = 999999; p.scale = 0.001; }
+    }
+    window.__sharedCanvasMeta = {
+      from: shared.from, to: shared.to, message: shared.message,
+      custom: shared.custom || [],
+    };
   }
 
   // Build sprites for the loaded manifest pieces
   for (const piece of pieces) buildSpriteForPiece(piece);
 
-  // Restore any user-dropped pieces from previous visits
-  const savedUserPieces = loadUserPieces();
-  for (const u of savedUserPieces) {
-    try {
-      const tex = await PIXI.Assets.load(u.src);
-      const piece = {
-        ...u,
-        zone: 'user',
-        scale: 0.8 + Math.random() * 0.2,
-        vx: 0, vy: 0, vrot: 0,
-        zIndex: pieces.length + 1000,
-        isUser: true,
-      };
-      pieces.push(piece);
-      buildSpriteForPiece(piece, tex);
-    } catch (e) {
-      console.warn('Could not restore user piece', u.id, e);
+  // If shared, hydrate the custom (image + note) pieces from the sender
+  if (shared && shared.custom) {
+    for (const c of shared.custom) {
+      try {
+        const tex = await PIXI.Assets.load(c.src);
+        const piece = {
+          id: 'shared-' + Math.random().toString(36).slice(2, 9),
+          src: c.src,
+          zone: c.kind === 'note' ? 'note' : 'user',
+          w: c.w, h: c.h,
+          x: c.x, y: c.y, rot: c.rot, scale: c.scale,
+          vx: 0, vy: 0, vrot: 0,
+          zIndex: c.z ?? 99000,
+          isUser: c.kind !== 'note',
+          isNote: c.kind === 'note',
+          text: c.text || null,
+          colorIdx: c.colorIdx ?? null,
+        };
+        pieces.push(piece);
+        buildSpriteForPiece(piece, tex);
+      } catch (e) {
+        console.warn('Could not load shared custom piece', c, e);
+      }
+    }
+  } else {
+    // Otherwise restore any user-dropped pieces from previous visits
+    const savedUserPieces = loadUserPieces();
+    for (const u of savedUserPieces) {
+      try {
+        const tex = await PIXI.Assets.load(u.src);
+        const piece = {
+          ...u,
+          zone: 'user',
+          scale: 0.8 + Math.random() * 0.2,
+          vx: 0, vy: 0, vrot: 0,
+          zIndex: pieces.length + 1000,
+          isUser: true,
+        };
+        pieces.push(piece);
+        buildSpriteForPiece(piece, tex);
+      } catch (e) {
+        console.warn('Could not restore user piece', u.id, e);
+      }
     }
   }
 
@@ -172,15 +229,24 @@ async function main() {
   setupSearch({ pieces, zones: manifest.zones, onFlyTo: flyTo });
   setupPolaroid(app);
   setupUserDrop({ onDrop: addUserPiece });
+  setupStickyNotes({ onAdd: addStickyNotePiece });
+  setupShare({ getPieces: () => pieces });
+
+  // If we opened from a shared canvas, show the greeting banner
+  if (window.__sharedCanvasMeta && (window.__sharedCanvasMeta.from || window.__sharedCanvasMeta.message || window.__sharedCanvasMeta.to)) {
+    showGreetingBanner(window.__sharedCanvasMeta);
+  }
 
   // 9. Hide loading, show welcome — wire mode picker
   document.getElementById('loading').classList.add('hidden');
   setupModePicker(savedMode);
 
   document.getElementById('welcome-enter').addEventListener('click', () => {
-    // Pick selected mode (defaults to whatever was saved or 'drift')
+    // Pick selected mode (defaults to whatever was saved or 'drift').
+    // Window.__pendingMode lets the "start fresh" button override (sets 'empty').
     const selected = document.querySelector('.mode-card.selected');
-    const newMode = selected?.dataset.mode || savedMode || 'drift';
+    const newMode = window.__pendingMode || selected?.dataset.mode || savedMode || 'drift';
+    window.__pendingMode = null;
     if (newMode !== savedMode || !saved) {
       // Re-arrange with the chosen mode (and clear any old saved layout
       // so the new arrangement isn't overridden by the prior curation)
@@ -788,6 +854,56 @@ async function addUserPiece(droppedPiece) {
   playPaperRustle(0.7);
 }
 
+function addStickyNotePiece(noteData) {
+  // Place the note near the center of the current view
+  const wx = view.x;
+  const wy = view.y;
+  PIXI.Assets.load(noteData.src).then(tex => {
+    const piece = {
+      id: 'note-' + Date.now(),
+      src: noteData.src,
+      zone: 'note',
+      w: noteData.w, h: noteData.h,
+      x: wx + (Math.random() - 0.5) * 100,
+      y: wy + (Math.random() - 0.5) * 100,
+      rot: (Math.random() - 0.5) * 0.18,
+      scale: 0.85 + Math.random() * 0.15,
+      vx: 0, vy: 0, vrot: 0,
+      isDragging: false,
+      isNote: true,
+      text: noteData.text,
+      colorIdx: noteData.colorIdx,
+      zIndex: 99500 + pieces.length,
+    };
+    pieces.push(piece);
+    buildSpriteForPiece(piece, tex);
+    scheduleSave(pieces);
+    playChime(523.25, 0.6, 0.04);
+  });
+}
+
+function showGreetingBanner({ from, to, message }) {
+  const banner = document.createElement('div');
+  banner.className = 'greeting-banner';
+  let inner = '';
+  if (to) inner += `<span class="gb-eyebrow">for</span><h3 class="gb-title">${escapeHtml(to)}</h3>`;
+  else if (from) inner += `<span class="gb-eyebrow">from</span><h3 class="gb-title">${escapeHtml(from)}</h3>`;
+  if (message) inner += `<p class="gb-message">${escapeHtml(message)}</p>`;
+  if (from && to) inner += `<span class="gb-eyebrow" style="margin-top:6px">— ${escapeHtml(from)}</span>`;
+  inner += `<button class="gb-close" title="dismiss">×</button>`;
+  banner.innerHTML = inner;
+  document.body.appendChild(banner);
+  requestAnimationFrame(() => banner.classList.add('visible'));
+  banner.querySelector('.gb-close').addEventListener('click', () => {
+    banner.classList.remove('visible');
+    setTimeout(() => banner.remove(), 500);
+  });
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[<>&"']/g, c => ({ '<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;' }[c]));
+}
+
 function setupModePicker(currentMode) {
   const cards = document.querySelectorAll('.mode-card');
   cards.forEach(c => {
@@ -799,6 +915,30 @@ function setupModePicker(currentMode) {
       c.classList.add('selected');
     });
   });
+
+  // Welcome tabs (explore / make one)
+  document.querySelectorAll('.welcome-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.welcome-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const target = tab.dataset.tab;
+      document.querySelectorAll('.tab-panel').forEach(p => {
+        p.classList.toggle('hidden', p.dataset.panel !== target);
+      });
+    });
+  });
+
+  // "start fresh" — chooses empty mode
+  const createBtn = document.getElementById('welcome-create');
+  if (createBtn) {
+    createBtn.addEventListener('click', () => {
+      // Pretend the user picked an "empty" mode card
+      cards.forEach(x => x.classList.remove('selected'));
+      // Trigger the existing welcome-enter flow with mode=empty by stashing it
+      window.__pendingMode = 'empty';
+      document.getElementById('welcome-enter').click();
+    });
+  }
 }
 
 main().catch(err => {
