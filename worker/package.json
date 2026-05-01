@@ -1,0 +1,14 @@
+{
+  "name": "drifting-atelier-share",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Cloudflare Worker backend for sharing memory canvases.",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "tail": "wrangler tail"
+  },
+  "devDependencies": {
+    "wrangler": "^3.90.0"
+  }
+}

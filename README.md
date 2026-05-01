@@ -62,6 +62,17 @@ The asset pack alone took as long as the website.
 | The Static | Polaroids, mixtapes, late-20th-century |
 | Loose Ends | sticky notes, receipts, marginalia, scattered everywhere |
 
+## Make a Memory Canvas (the "share with someone" mode)
+
+Click the **"make one"** tab on the welcome card and you get a blank cream canvas. Drop your photos. Press **N** to add handwritten sticky notes. Arrange everything however you want. Hit the **↗ share button** in the toolbar — type "from", "to", and a short message — and you get a shareable URL.
+
+**Two ways the URL works:**
+
+1. **Tiny canvases** — packed into the URL itself with deflate compression. Works without any backend.
+2. **Real canvases with photos** — needs the [Cloudflare Worker backend](./worker/) deployed (one-time, ~5 minutes, completely free).
+
+When the recipient opens the link, they see your arrangement exactly as you made it, with a handwritten "from / to / message" greeting at the top.
+
 ## Things I Built Into It
 
 - **Infinite pan + zoom canvas** (Pixi.js v8, WebGL)
