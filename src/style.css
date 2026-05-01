@@ -133,8 +133,9 @@ canvas {
 
 .welcome-stage {
   position: relative;
-  width: 540px;
+  width: 440px;
   max-width: 92vw;
+  max-height: 92vh;
   animation: welcome-float-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
@@ -172,9 +173,9 @@ canvas {
 .welcome-card {
   position: relative;
   background: var(--paper);
-  padding: 56px 64px 40px;
+  padding: 36px 40px 28px;
   border: 1.5px solid var(--ink);
-  box-shadow: 8px 12px 0 rgba(61, 46, 31, 0.12), 0 0 60px rgba(61, 46, 31, 0.06);
+  box-shadow: 6px 9px 0 rgba(61, 46, 31, 0.12), 0 0 60px rgba(61, 46, 31, 0.06);
   transform: rotate(-0.8deg);
 }
 
@@ -222,18 +223,18 @@ canvas {
   font-family: 'Cormorant Garamond', serif;
   font-weight: 400;
   font-style: italic;
-  font-size: 52px;
+  font-size: 38px;
   line-height: 1;
-  margin: 0 0 16px;
+  margin: 0 0 8px;
   color: var(--ink);
   letter-spacing: -0.5px;
 }
 
 .welcome-sub {
   font-family: 'Caveat', cursive;
-  font-size: 24px !important;
-  line-height: 1.15;
-  margin: 0 0 24px !important;
+  font-size: 18px !important;
+  line-height: 1.3;
+  margin: 0 0 18px !important;
   color: var(--ink);
   opacity: 0.7;
 }
@@ -297,12 +298,12 @@ canvas {
 
 #welcome-enter {
   width: 100%;
-  padding: 14px 24px;
+  padding: 11px 20px;
   border: 1.5px solid var(--ink);
   background: var(--sun);
   color: var(--ink);
   font-family: 'Cormorant Garamond', serif;
-  font-size: 19px;
+  font-size: 17px;
   font-style: italic;
   cursor: none;
   box-shadow: 3px 3px 0 var(--ink);
@@ -341,31 +342,30 @@ canvas {
 /* ---------- Mode picker ---------- */
 
 .mode-picker {
-  margin: 8px 0 22px;
+  margin: 4px 0 18px;
 }
 
 .mode-label {
   font-family: 'Caveat', cursive !important;
-  font-size: 18px !important;
-  margin: 0 0 10px !important;
+  font-size: 15px !important;
+  margin: 0 0 8px !important;
   color: var(--ink);
-  opacity: 0.65 !important;
-  text-align: center;
+  opacity: 0.6 !important;
 }
 
 .mode-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: 6px;
 }
 
 .mode-card {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 2px;
-  padding: 10px 12px;
-  border: 1.2px solid rgba(61, 46, 31, 0.35);
+  gap: 1px;
+  padding: 7px 11px;
+  border: 1.2px solid rgba(61, 46, 31, 0.3);
   background: rgba(255, 255, 255, 0.4);
   cursor: none;
   transition: all 0.18s;
@@ -388,25 +388,17 @@ canvas {
   box-shadow: 2px 2px 0 var(--ink);
 }
 
-.mode-icon {
-  position: absolute;
-  top: 8px; right: 12px;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 18px;
-  opacity: 0.55;
-}
-
 .mode-name {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
-  font-size: 17px;
+  font-size: 15px;
   color: var(--ink);
 }
 
 .mode-desc {
-  font-size: 10.5px;
+  font-size: 9.5px;
   color: var(--ink);
-  opacity: 0.65;
+  opacity: 0.6;
   letter-spacing: 0.2px;
 }
 
@@ -447,6 +439,66 @@ canvas {
 
 .piece-note.visible {
   opacity: 1;
+}
+
+/* ---------- Responsive: small / short screens ---------- */
+
+/* On any touch-only device, drop the custom cursor and graphite trail —
+   they're meaningless without a mouse and just add noise. */
+@media (hover: none), (pointer: coarse) {
+  html, body { cursor: auto !important; }
+  .cursor, .cursor-trail { display: none !important; }
+  /* Use system cursors so taps feel right */
+  #welcome-enter, .mode-card, #hud-controls button { cursor: pointer !important; }
+  /* Bigger thumb targets in HUD */
+  #hud-controls button { width: 48px; height: 48px; font-size: 22px; }
+  .hud-zone-label { font-size: 22px; }
+}
+
+/* Phones / very narrow */
+@media (max-width: 520px) {
+  .welcome-card {
+    padding: 28px 22px 22px;
+  }
+  .welcome-card h1 { font-size: 30px; }
+  .welcome-sub    { font-size: 16px !important; margin-bottom: 14px !important; }
+  .scrap-1, .scrap-2 { display: none; }
+  .scrap-3 { right: -10px; }
+  .welcome-tape-tl { width: 80px; left: 16px; }
+  .welcome-stamp { font-size: 8px; padding: 2px 6px; top: 14px; right: 14px; }
+  .mode-label { font-size: 14px !important; }
+  .mode-name  { font-size: 14px; }
+  .mode-desc  { font-size: 9px; }
+  /* HUD: make controls easier to reach with thumb */
+  #hud {
+    bottom: 14px;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+/* Short laptops (your reported issue) — keep welcome inside the viewport */
+@media (max-height: 720px) {
+  .welcome-card {
+    padding: 24px 36px 22px;
+  }
+  .welcome-card h1 { font-size: 32px; margin-bottom: 6px; }
+  .welcome-sub { font-size: 16px !important; margin-bottom: 12px !important; }
+  .mode-picker { margin: 2px 0 12px; }
+  .mode-card { padding: 6px 10px; }
+  #welcome-enter { padding: 9px 18px; font-size: 16px; }
+  .scrap-1 { width: 160px; height: 220px; top: -22px; left: -40px; }
+  .scrap-2 { width: 140px; height: 180px; bottom: -18px; right: -40px; }
+}
+
+@media (max-height: 600px) {
+  .welcome-stage { transform: scale(0.92); transform-origin: center; }
+  .welcome-card { padding: 18px 28px 16px; }
+  .welcome-card h1 { font-size: 28px; }
+  .welcome-sub { display: none; }
+  .mode-grid { gap: 4px; }
+  .mode-card { padding: 5px 9px; }
 }
 
 /* ---------- Loading ---------- */
