@@ -14,6 +14,8 @@ import {
 } from './atmosphere.js';
 import { loadLayout, applySavedLayout, scheduleSave, clearLayout, loadMode, saveMode } from './persistence.js';
 import { showNote, hideNote } from './notes.js';
+import { setupMinimap, updateMinimap } from './minimap.js';
+import { setupSearch } from './search.js';
 
 // Resolve absolute /asset paths under whatever base path the app is served at
 // (e.g. "/" in dev, "/drifting-atelier/" on GitHub Pages).
@@ -188,6 +190,9 @@ async function main() {
     onReset: () => recenter(),
     getCurrentZone: () => detectCurrentZone(),
   });
+
+  setupMinimap({ zones: manifest.zones, onFlyTo: flyTo });
+  setupSearch({ pieces, zones: manifest.zones, onFlyTo: flyTo });
 
   // 9. Hide loading, show welcome — wire mode picker
   document.getElementById('loading').classList.add('hidden');
@@ -379,6 +384,7 @@ function applyView() {
   world.x = window.innerWidth / 2 - view.x * view.zoom;
   world.y = window.innerHeight / 2 - view.y * view.zoom;
   world.scale.set(view.zoom);
+  updateMinimap(view, window.innerWidth, window.innerHeight);
 }
 
 function zoomBy(factor, screenX, screenY) {
@@ -393,12 +399,13 @@ function zoomBy(factor, screenX, screenY) {
   applyView();
 }
 
-function recenter() {
-  // animate to (0,0) at default zoom
+function recenter() { flyTo(0, 0, INITIAL_ZOOM); }
+
+function flyTo(targetX, targetY, targetZoom) {
   const start = { x: view.x, y: view.y, zoom: view.zoom };
-  const end = { x: 0, y: 0, zoom: INITIAL_ZOOM };
+  const end = { x: targetX, y: targetY, zoom: targetZoom ?? view.zoom };
   const t0 = performance.now();
-  const dur = 700;
+  const dur = 800;
   function step(now) {
     const t = Math.min(1, (now - t0) / dur);
     const e = 1 - Math.pow(1 - t, 3); // easeOutCubic

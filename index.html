@@ -12,10 +12,29 @@
     <div id="hud">
       <div id="hud-zone" class="hud-zone-label"></div>
       <div id="hud-controls">
+        <button id="btn-search" title="Search (Ctrl/Cmd+K)">⌕</button>
+        <button id="btn-polaroid" title="Take a polaroid (P)">⊡</button>
         <button id="btn-zoom-out" title="Zoom out (−)">−</button>
         <button id="btn-zoom-in" title="Zoom in (+)">+</button>
         <button id="btn-reset" title="Recenter (R)">⤴</button>
         <button id="btn-sound" title="Toggle ambient sound (S)">♪</button>
+      </div>
+    </div>
+
+    <!-- Mini-map: small map of zones, click to fly there -->
+    <div id="minimap" class="minimap" title="zones — click to fly">
+      <div class="minimap-viewport" id="minimap-viewport"></div>
+      <!-- Zone dots populated by JS -->
+    </div>
+
+    <!-- Search modal (Cmd/Ctrl+K) -->
+    <div id="search-modal" class="search-modal hidden">
+      <div class="search-card">
+        <input id="search-input" type="text" placeholder="search pieces — try 'polaroid', 'cave', 'crayon'..." autocomplete="off" />
+        <div id="search-results" class="search-results"></div>
+        <div class="search-foot">
+          <kbd>↑</kbd><kbd>↓</kbd> navigate · <kbd>enter</kbd> fly to · <kbd>esc</kbd> close
+        </div>
       </div>
     </div>
 
