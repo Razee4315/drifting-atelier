@@ -842,13 +842,6 @@
       "h": 500
     },
     {
-      "id": "e13-cupid-and-psyche-fragment",
-      "zone": "salon",
-      "src": "/the-salon/E13_cupid-and-psyche-fragment.png",
-      "w": 700,
-      "h": 800
-    },
-    {
       "id": "e14-sealed-letter-with-ribbon",
       "zone": "salon",
       "src": "/the-salon/E14_sealed-letter-with-ribbon.png",
@@ -896,13 +889,6 @@
       "src": "/the-salon/E7_floral-still-life.png",
       "w": 700,
       "h": 800
-    },
-    {
-      "id": "e8-charcoal-nude-figure-study",
-      "zone": "salon",
-      "src": "/the-salon/E8_charcoal-nude-figure-study.png",
-      "w": 600,
-      "h": 900
     },
     {
       "id": "e9-renaissance-map-fragment",

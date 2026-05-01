@@ -15,6 +15,11 @@ import {
 import { loadLayout, applySavedLayout, scheduleSave, clearLayout, loadMode, saveMode } from './persistence.js';
 import { showNote, hideNote } from './notes.js';
 
+// Resolve absolute /asset paths under whatever base path the app is served at
+// (e.g. "/" in dev, "/drifting-atelier/" on GitHub Pages).
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const url = (p) => BASE + p;
+
 const WORLD_BG_COLOR = 0xFBF6EC;
 const INITIAL_ZOOM = 0.45;
 const ZOOM_MIN = 0.15;
@@ -31,9 +36,17 @@ let lastPointer = { x: 0, y: 0 };
 let pointerHistory = []; // for throw velocity
 
 async function main() {
-  // 1. Load manifest
-  const res = await fetch('/manifest.json');
+  // 0. Set runtime asset URLs that CSS needs (cursor backgrounds)
+  const root = document.documentElement.style;
+  root.setProperty('--cursor-pencil', `url("${url('/j-ui-elements/j1-pencil-cursor.png')}")`);
+  root.setProperty('--cursor-grab',   `url("${url('/j-ui-elements/j2-hand-grab-cursor.png')}")`);
+
+  // 1. Load manifest, then prefix every src in it with BASE so all loaders work
+  const res = await fetch(url('/manifest.json'));
   manifest = await res.json();
+  for (const p of manifest.pieces) p.src = url(p.src);
+  for (const k in manifest.ui) manifest.ui[k].src = url(manifest.ui[k].src);
+  for (const k in manifest.backgrounds) manifest.backgrounds[k].src = url(manifest.backgrounds[k].src);
   zoneCenters = Object.fromEntries(manifest.zones.map(z => [z.id, z.center]));
 
   // 2. Init Pixi
@@ -149,7 +162,7 @@ async function main() {
   }
 
   // 6b. Hidden mega-image at extreme zoom out
-  const megaTex = PIXI.Assets.get('/k-background/k5-hidden-mega-eye-pencil.png');
+  const megaTex = PIXI.Assets.get(url('/k-background/k5-hidden-mega-eye-pencil.png'));
   if (megaTex) {
     const mega = new PIXI.Sprite(megaTex);
     mega.zIndex = -10000;
@@ -158,7 +171,7 @@ async function main() {
   }
 
   // 6c. Ladybug
-  const ladyTex = PIXI.Assets.get('/k-background/k6-ladybug-walking-sprite-sheet.png');
+  const ladyTex = PIXI.Assets.get(url('/k-background/k6-ladybug-walking-sprite-sheet.png'));
   if (ladyTex) {
     initLadybug(ladyTex, app.stage); // draw in screen space, on top
   }
@@ -251,7 +264,7 @@ function buildPaperBackground() {
 function rebuildPaperBackground() {
   // Clear bg layer
   bgLayer.removeChildren();
-  const tex = PIXI.Assets.get('/k-background/k1-cream-paper-texture.png');
+  const tex = PIXI.Assets.get(url('/k-background/k1-cream-paper-texture.png'));
   if (tex) {
     const tilingSprite = new PIXI.TilingSprite({
       texture: tex,
@@ -263,7 +276,7 @@ function rebuildPaperBackground() {
   }
 
   // Soft vignette overlay
-  const vTex = PIXI.Assets.get('/k-background/k4-paper-shadow-gradient.png');
+  const vTex = PIXI.Assets.get(url('/k-background/k4-paper-shadow-gradient.png'));
   if (vTex) {
     const v = new PIXI.Sprite(vTex);
     v.width = window.innerWidth;
@@ -273,7 +286,7 @@ function rebuildPaperBackground() {
   }
 
   // Sun beam overlay (subtle, rotates over time)
-  const sunTex = PIXI.Assets.get('/k-background/k3-sunlight-beam-overlay.png');
+  const sunTex = PIXI.Assets.get(url('/k-background/k3-sunlight-beam-overlay.png'));
   if (sunTex) {
     const s = new PIXI.Sprite(sunTex);
     s.alpha = 0.18;

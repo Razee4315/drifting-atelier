@@ -40,14 +40,14 @@ canvas {
   width: 32px; height: 32px;
   pointer-events: none;
   z-index: 1000;
-  background-image: url('/j-ui-elements/j1-pencil-cursor.png');
+  background-image: var(--cursor-pencil);
   background-size: contain;
   background-repeat: no-repeat;
   transform: translate(-4px, -4px);
   transition: transform 0.1s ease;
 }
 .cursor.grab {
-  background-image: url('/j-ui-elements/j2-hand-grab-cursor.png');
+  background-image: var(--cursor-grab);
 }
 .cursor.dragging {
   transform: translate(-4px, -4px) scale(1.15);

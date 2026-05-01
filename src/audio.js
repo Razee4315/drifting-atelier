@@ -7,9 +7,11 @@
  * and a soft chime for discovery moments — kept very quiet.
  */
 
+// Resolve under whatever base path the app runs at
+const _BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 const TRACKS = [
-  '/audio/ambient-1.mp3',
-  '/audio/ambient-2.mp3',
+  _BASE + '/audio/ambient-1.mp3',
+  _BASE + '/audio/ambient-2.mp3',
 ];
 
 const TARGET_GAIN = 0.42;       // music volume (0..1)

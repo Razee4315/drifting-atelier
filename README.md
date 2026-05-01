@@ -7,7 +7,7 @@
 
   **By Saqlain (@Razee4315)**
 
-  [live demo](#) · [report a bug](https://github.com/Razee4315/drifting-atelier/issues) · [the asset pack](#assets)
+  [live demo](https://razee4315.github.io/drifting-atelier/) · [report a bug](https://github.com/Razee4315/drifting-atelier/issues) · [the asset pack](#assets)
 </div>
 
 ---
@@ -16,7 +16,7 @@
 
 Most art websites are grids. Boxes inside boxes. Polite. Predictable. This is not that.
 
-The Drifting Atelier is an **infinite paper canvas** where art from every era of human history floats together. Cave handprints next to Polaroids. A child's crayon dragon next to a Renaissance hand study. Pressed flowers, ukiyo-e prints, surrealist apples, art deco posters, scribbled napkin doodles. **143 pieces, all AI-generated, all on transparent backgrounds, all draggable.**
+The Drifting Atelier is an **infinite paper canvas** where art from every era of human history floats together. Cave handprints next to Polaroids. A child's crayon dragon next to a Renaissance hand study. Pressed flowers, ukiyo-e prints, surrealist apples, art deco posters, scribbled napkin doodles. **141 pieces, all AI-generated with ChatGPT image 2.0 (2026 model), all on transparent backgrounds, all draggable.**
 
 You can pan, zoom, grab any piece, throw it, double-click it for a handwritten note, and the whole thing remembers what you did and brings it back next visit.
 
@@ -30,17 +30,19 @@ The vibe target: an **artist's attic studio** where the walls and floor are cove
 
 Then I had to figure out how to actually build it.
 
-## The Image Generation Was a Nightmare
+## How the 141 Images Got Made
 
-Real talk: **generating 143 cohesive AI images is not a piece of cake.**
+Honestly? **ChatGPT image 2.0 (2026 model) was a beast.** Most pieces came out clean on the very first shot — the right aesthetic, the right transparent background, the right size. The model just *got it*.
 
-Each piece needed:
-- Transparent background (a non-trivial number of generations failed at this)
-- The right "feel" for its era (ukiyo-e ≠ art deco ≠ child's crayon — and the model has opinions)
-- A consistent paper-and-pencil studio aesthetic across nine wildly different style zones
-- The right size and aspect ratio so the layout doesn't look like a wreck
+But "first shot" doesn't mean "fast." With 141 images across 9 different style zones (cave painting → ukiyo-e → child's crayon → Renaissance → Polaroid), the volume itself was the work. I ran the generations through **Codex across many separate sessions** — batching prompts by zone so each session could keep one consistent aesthetic in mind.
 
-I re-rolled some pieces 5+ times. Spent hours per category just curating. Wrote out detailed prompts for every single image up front so the pack would feel like one body of work and not a pile of stock illustrations.
+What actually ate the time:
+- Writing tight, specific prompts for every single piece up front so the pack reads as one body of work, not a stock-image pile
+- Curating — even when the model nailed it on shot one, I still had to look at every image and decide if it belonged
+- Aspect-ratio sanity-checking so the scattered layout doesn't look like a wreck
+- The sheer count: 141 pieces × ~30 seconds of human attention each = a lot of half-hours
+
+The model is genuinely good. The work is in giving it the right brief and showing up for every iteration.
 
 The asset pack alone took as long as the website.
 
@@ -102,7 +104,7 @@ No backend. Static deploy. Works on any host.
 
 ## Asset Credits
 
-All 143 PNG images were generated via AI tools (mid-2025 era models) and individually curated. The two ambient music tracks are CC0 from [Pixabay](https://pixabay.com/music/). Fonts (Cormorant Garamond, Caveat, Special Elite) are from Google Fonts.
+All 141 PNG images were generated using **ChatGPT image 2.0 (2026 model)**, run through **Codex** across many sessions, and individually curated by hand. The two ambient music tracks are CC0 from [Pixabay](https://pixabay.com/music/). Fonts (Cormorant Garamond, Caveat, Special Elite) are from Google Fonts.
 
 If you want the asset pack on its own, holler — I'll split it into a separate repo with prompts.json so you can extend it.
 
