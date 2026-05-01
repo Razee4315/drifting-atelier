@@ -6,7 +6,7 @@ import * as PIXI from 'pixi.js';
 import { placeIntoZones } from './layout.js';
 import { setupCursor } from './cursor.js';
 import { setupHUD } from './hud.js';
-import { playPaperRustle, playChime, setAudioEnabled } from './audio.js';
+import { playPaperRustle, playChime, setAudioEnabled, setMusicZone } from './audio.js';
 import {
   setSunSprite, updateSun, resizeSun,
   setMegaSprite, updateMega,
@@ -18,6 +18,7 @@ import { setupMinimap, updateMinimap } from './minimap.js';
 import { setupSearch } from './search.js';
 import { setupPolaroid } from './polaroid.js';
 import { setupUserDrop, loadUserPieces } from './userpieces.js';
+import { setupDiscovery, checkDiscovery, showDiscoveryToast } from './discovery.js';
 
 // Resolve absolute /asset paths under whatever base path the app is served at
 // (e.g. "/" in dev, "/drifting-atelier/" on GitHub Pages).
@@ -148,7 +149,23 @@ async function main() {
     onZoomIn: () => zoomBy(1.25, window.innerWidth/2, window.innerHeight/2),
     onZoomOut: () => zoomBy(0.8, window.innerWidth/2, window.innerHeight/2),
     onReset: () => recenter(),
-    getCurrentZone: () => detectCurrentZone(),
+    getCurrentZone: () => {
+      const z = detectCurrentZone();
+      // Side-effect: update music EQ + check for first-time discovery as the
+      // user wanders. The HUD already polls this every ~200ms, so this is
+      // a free hook into the zone-tracking loop.
+      if (z && z.id) {
+        setMusicZone(z.id);
+        checkDiscovery(z.id, z.name);
+      }
+      return z;
+    },
+  });
+  setupDiscovery({
+    onFirstDiscovery: (zoneName) => {
+      showDiscoveryToast(zoneName);
+      playChime(523.25 + Math.random() * 200, 1.6, 0.06);
+    },
   });
 
   setupMinimap({ zones: manifest.zones, onFlyTo: flyTo });
@@ -393,8 +410,8 @@ function detectCurrentZone() {
     const d = dx*dx + dy*dy;
     if (d < bestD) { bestD = d; best = zone; }
   }
-  // If no zone within 2200 radius, return "Loose Ends" or null
-  if (Math.sqrt(bestD) > 2400) return { name: '· · ·' };
+  // If no zone within range, we're drifting through marginalia — neutral EQ
+  if (Math.sqrt(bestD) > 2400) return { id: 'loose-ends', name: '· · ·' };
   return best;
 }
 

@@ -19,11 +19,16 @@ const FADE_TIME_MS = 1400;
 const CROSSFADE_TAIL_MS = 4000; // when one track is near end, start crossfading to next
 
 let isOn = false;
-let audioCtx = null;        // for SFX only
+let audioCtx = null;        // shared for SFX + music piping
 let sfxMasterGain = null;
-let players = [];           // { audio: HTMLAudioElement, gainTarget: number, fadeRaf: number|null }
+let musicMasterGain = null; // gain after the per-zone filter chain
+let zoneFilterLow = null;   // shared low-shelf for warmth/bass
+let zoneFilterHigh = null;  // shared high-shelf for brightness
+let zoneTremoloGain = null; // for "watery" zones we can amplitude-modulate
+let players = [];           // { audio, source, fadeRaf }
 let activeIdx = 0;
 let crossfadeScheduled = false;
+let mediaSourcesConnected = false;
 
 export function isAudioOn() { return isOn; }
 
@@ -39,12 +44,77 @@ function start() {
   isOn = true;
   ensureSfxCtx();
   ensurePlayers();
+  pipeMusicThroughFilters();
   // Fade in active player
   const p = players[activeIdx];
   fadeTo(p.audio, TARGET_GAIN, FADE_TIME_MS);
   p.audio.play().catch(err => {
     console.warn('Audio play failed (browser blocked autoplay?)', err);
   });
+}
+
+/**
+ * Wire each music <audio> element through the Web Audio graph so we can
+ * apply a per-zone filter to it. Done once, lazily.
+ */
+function pipeMusicThroughFilters() {
+  if (mediaSourcesConnected || !audioCtx) return;
+  // Build the shared filter chain
+  zoneFilterLow = audioCtx.createBiquadFilter();
+  zoneFilterLow.type = 'lowshelf';
+  zoneFilterLow.frequency.value = 320;
+  zoneFilterLow.gain.value = 0;
+
+  zoneFilterHigh = audioCtx.createBiquadFilter();
+  zoneFilterHigh.type = 'highshelf';
+  zoneFilterHigh.frequency.value = 2400;
+  zoneFilterHigh.gain.value = 0;
+
+  musicMasterGain = audioCtx.createGain();
+  musicMasterGain.gain.value = 1;
+
+  zoneFilterLow.connect(zoneFilterHigh);
+  zoneFilterHigh.connect(musicMasterGain);
+  musicMasterGain.connect(audioCtx.destination);
+
+  for (const p of players) {
+    try {
+      const src = audioCtx.createMediaElementSource(p.audio);
+      p.source = src;
+      src.connect(zoneFilterLow);
+    } catch (e) {
+      // already connected (Safari throws on second call) — that's fine
+    }
+  }
+  mediaSourcesConnected = true;
+}
+
+// Per-zone EQ curves: subtle, never harsh, never headache-y
+const ZONE_EQ = {
+  hearth:    { low:  0,  high:  0  },  // neutral
+  cave:      { low: +5,  high: -4  },  // warm, distant
+  garden:    { low: -1,  high: +3  },  // bright, airy
+  nursery:   { low: -2,  high: +5  },  // playful, sparkly
+  salon:     { low: +3,  high: -2  },  // mellow, plush
+  float:     { low: -3,  high: +4  },  // dreamy, breathy
+  press:     { low: +2,  high: +1  },  // punchy
+  static:    { low: +1,  high: -3  },  // lo-fi, tape
+  'loose-ends': { low: 0, high: 0 },
+  user:      { low:  0,  high:  0  },
+  unknown:   { low:  0,  high:  0  },
+};
+
+let lastZoneId = null;
+export function setMusicZone(zoneId) {
+  if (!zoneFilterLow || !zoneFilterHigh) return;
+  if (zoneId === lastZoneId) return;
+  lastZoneId = zoneId;
+  const eq = ZONE_EQ[zoneId] || ZONE_EQ.unknown;
+  const t = audioCtx.currentTime;
+  zoneFilterLow.gain.cancelScheduledValues(t);
+  zoneFilterLow.gain.setTargetAtTime(eq.low, t, 0.6); // ~1.8s glide
+  zoneFilterHigh.gain.cancelScheduledValues(t);
+  zoneFilterHigh.gain.setTargetAtTime(eq.high, t, 0.6);
 }
 
 function stop() {
