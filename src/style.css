@@ -602,6 +602,56 @@ canvas {
   margin: 0 2px;
 }
 
+/* ---------- Drop your own image ---------- */
+
+body.dragging-image::before {
+  content: 'drop your image — it will be pinned to the wall';
+  position: fixed;
+  inset: 0;
+  background: rgba(245, 214, 122, 0.18);
+  border: 4px dashed rgba(61, 46, 31, 0.55);
+  z-index: 220;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Caveat', cursive;
+  font-size: 36px;
+  color: var(--ink);
+  text-align: center;
+  pointer-events: none;
+  animation: dropPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes dropPulse {
+  0%, 100% { background: rgba(245, 214, 122, 0.18); }
+  50%      { background: rgba(245, 214, 122, 0.32); }
+}
+
+.user-toast {
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  padding: 8px 18px;
+  border-radius: 2px;
+  z-index: 500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s;
+  white-space: nowrap;
+  max-width: 90vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.user-toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
 /* ---------- Polaroid screenshot ---------- */
 
 .polaroid-flash {

@@ -17,6 +17,7 @@ import { showNote, hideNote } from './notes.js';
 import { setupMinimap, updateMinimap } from './minimap.js';
 import { setupSearch } from './search.js';
 import { setupPolaroid } from './polaroid.js';
+import { setupUserDrop, loadUserPieces } from './userpieces.js';
 
 // Resolve absolute /asset paths under whatever base path the app is served at
 // (e.g. "/" in dev, "/drifting-atelier/" on GitHub Pages).
@@ -99,69 +100,27 @@ async function main() {
     console.log(`Restored ${applied} piece positions from your previous visit.`);
   }
 
-  // Build sprites in pixi
-  for (const piece of pieces) {
-    const tex = PIXI.Assets.get(piece.src);
-    const sprite = new PIXI.Sprite(tex);
-    sprite.anchor.set(0.5);
-    sprite.x = piece.x;
-    sprite.y = piece.y;
-    sprite.rotation = piece.rot;
-    sprite.scale.set(piece.scale);
-    sprite.eventMode = 'static';
-    sprite.cursor = 'none';
-    sprite.zIndex = piece.zIndex || 0;
-    piece.sprite = sprite;
-    artLayer.addChild(sprite);
+  // Build sprites for the loaded manifest pieces
+  for (const piece of pieces) buildSpriteForPiece(piece);
 
-    // Tape / pin / paperclip overlay
-    if (piece.attachment) {
-      const att = piece.attachment;
-      const attTex = PIXI.Assets.get(att.src);
-      if (attTex) {
-        const attSprite = new PIXI.Sprite(attTex);
-        attSprite.anchor.set(0.5);
-        attSprite.x = att.dx;
-        attSprite.y = att.dy;
-        attSprite.rotation = att.rot;
-        attSprite.scale.set(att.scale || 1);
-        attSprite.alpha = att.alpha ?? 1;
-        attSprite.eventMode = 'none';
-        sprite.addChild(attSprite);
-      }
+  // Restore any user-dropped pieces from previous visits
+  const savedUserPieces = loadUserPieces();
+  for (const u of savedUserPieces) {
+    try {
+      const tex = await PIXI.Assets.load(u.src);
+      const piece = {
+        ...u,
+        zone: 'user',
+        scale: 0.8 + Math.random() * 0.2,
+        vx: 0, vy: 0, vrot: 0,
+        zIndex: pieces.length + 1000,
+        isUser: true,
+      };
+      pieces.push(piece);
+      buildSpriteForPiece(piece, tex);
+    } catch (e) {
+      console.warn('Could not restore user piece', u.id, e);
     }
-
-    // Drag handling
-    sprite.on('pointerdown', (e) => onPiecePointerDown(e, piece));
-
-    // Double-click: reveal handwritten note
-    let lastTap = 0;
-    sprite.on('pointertap', (e) => {
-      const now = performance.now();
-      if (now - lastTap < 320) {
-        // double-click
-        showNote(piece, e.global.x, e.global.y);
-        playChime(880, 0.6, 0.04);
-        lastTap = 0;
-      } else {
-        lastTap = now;
-      }
-    });
-
-    // Hover: lift slightly and tilt a touch toward cursor
-    sprite.on('pointerover', () => {
-      if (piece.isDragging) return;
-      piece.hoverActive = true;
-      piece.savedZ = sprite.zIndex;
-      sprite.zIndex = 50000;
-      piece.targetScale = piece.scale * 1.03;
-    });
-    sprite.on('pointerout', () => {
-      piece.hoverActive = false;
-      sprite.zIndex = piece.savedZ ?? piece.zIndex;
-      piece.targetScale = piece.scale;
-      piece.targetExtraRot = 0;
-    });
   }
 
   // 6b. Hidden mega-image at extreme zoom out
@@ -195,6 +154,7 @@ async function main() {
   setupMinimap({ zones: manifest.zones, onFlyTo: flyTo });
   setupSearch({ pieces, zones: manifest.zones, onFlyTo: flyTo });
   setupPolaroid(app);
+  setupUserDrop({ onDrop: addUserPiece });
 
   // 9. Hide loading, show welcome — wire mode picker
   document.getElementById('loading').classList.add('hidden');
@@ -690,6 +650,125 @@ function tick(ticker) {
       }
     }
   }
+}
+
+function buildSpriteForPiece(piece, providedTex) {
+  const tex = providedTex || PIXI.Assets.get(piece.src);
+  if (!tex) return;
+  const sprite = new PIXI.Sprite(tex);
+  sprite.anchor.set(0.5);
+  sprite.x = piece.x;
+  sprite.y = piece.y;
+  sprite.rotation = piece.rot;
+  sprite.scale.set(piece.scale);
+  sprite.eventMode = 'static';
+  sprite.cursor = 'none';
+  sprite.zIndex = piece.zIndex || 0;
+  piece.sprite = sprite;
+  artLayer.addChild(sprite);
+
+  // Tape / pin / paperclip overlay
+  if (piece.attachment) {
+    const att = piece.attachment;
+    const attTex = PIXI.Assets.get(att.src);
+    if (attTex) {
+      const attSprite = new PIXI.Sprite(attTex);
+      attSprite.anchor.set(0.5);
+      attSprite.x = att.dx;
+      attSprite.y = att.dy;
+      attSprite.rotation = att.rot;
+      attSprite.scale.set(att.scale || 1);
+      attSprite.alpha = att.alpha ?? 1;
+      attSprite.eventMode = 'none';
+      sprite.addChild(attSprite);
+    }
+  }
+
+  // User-dropped pieces get a yellow washi tape strip on top
+  if (piece.isUser) {
+    const tapeTex = PIXI.Assets.get(url('/j-ui-elements/' + Object.keys(manifest.ui).find(k => k.includes('washi') || k.includes('tape') || k.includes('yellow')) || 'a07-washi-tape-strip-yellow.png')) || PIXI.Assets.get(manifest.ui['washi-tape-strip-yellow']?.src);
+    if (tapeTex) {
+      const tape = new PIXI.Sprite(tapeTex);
+      tape.anchor.set(0.5);
+      tape.x = (Math.random() - 0.5) * (piece.w * 0.3);
+      tape.y = -piece.h * 0.5 + 8;
+      tape.rotation = (Math.random() - 0.5) * 0.5;
+      tape.scale.set(0.7 + Math.random() * 0.3);
+      tape.alpha = 0.9;
+      tape.eventMode = 'none';
+      sprite.addChild(tape);
+    }
+  }
+
+  // Drag handling
+  sprite.on('pointerdown', (e) => onPiecePointerDown(e, piece));
+
+  // Double-click: reveal handwritten note (skip for user pieces — they have no zone story)
+  let lastTap = 0;
+  sprite.on('pointertap', (e) => {
+    if (piece.isUser) return;
+    const now = performance.now();
+    if (now - lastTap < 320) {
+      showNote(piece, e.global.x, e.global.y);
+      playChime(880, 0.6, 0.04);
+      lastTap = 0;
+    } else {
+      lastTap = now;
+    }
+  });
+
+  // Hover: lift slightly
+  sprite.on('pointerover', () => {
+    if (piece.isDragging) return;
+    piece.hoverActive = true;
+    piece.savedZ = sprite.zIndex;
+    sprite.zIndex = 50000;
+    piece.targetScale = piece.scale * 1.03;
+  });
+  sprite.on('pointerout', () => {
+    piece.hoverActive = false;
+    sprite.zIndex = piece.savedZ ?? piece.zIndex;
+    piece.targetScale = piece.scale;
+    piece.targetExtraRot = 0;
+  });
+}
+
+async function addUserPiece(droppedPiece) {
+  // Convert screen drop coords -> world coords
+  const screen = droppedPiece.droppedAtScreen;
+  const wx = (screen.x - world.x) / view.zoom;
+  const wy = (screen.y - world.y) / view.zoom;
+
+  // Auto-scale large images down to a reasonable size
+  const maxDim = 600;
+  const m = Math.max(droppedPiece.w, droppedPiece.h);
+  const scaleNorm = m > maxDim ? maxDim / m : 1;
+
+  const tex = await PIXI.Assets.load(droppedPiece.src);
+  const piece = {
+    id: droppedPiece.id,
+    src: droppedPiece.src,
+    zone: 'user',
+    w: droppedPiece.w,
+    h: droppedPiece.h,
+    x: wx,
+    y: wy,
+    rot: (Math.random() - 0.5) * 0.3,
+    scale: 0.7 + Math.random() * 0.25,
+    vx: 0, vy: 0, vrot: 0,
+    isDragging: false,
+    isUser: true,
+    zIndex: 99000 + pieces.length,
+  };
+  // The "scale" baseline is multiplied by the natural-size adjustment
+  piece.scale *= scaleNorm;
+  pieces.push(piece);
+  buildSpriteForPiece(piece, tex);
+  // Persist position by scheduling a save
+  scheduleSave(pieces);
+  // Soft chime + rustle
+  playChime(659.25, 0.8, 0.05);
+  playPaperRustle(0.7);
 }
 
 function setupModePicker(currentMode) {
