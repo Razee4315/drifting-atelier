@@ -602,6 +602,92 @@ canvas {
   margin: 0 2px;
 }
 
+/* ---------- Polaroid screenshot ---------- */
+
+.polaroid-flash {
+  position: fixed;
+  inset: 0;
+  background: white;
+  z-index: 400;
+  pointer-events: none;
+  opacity: 0.85;
+  transition: opacity 0.45s ease-out;
+}
+
+.polaroid-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 350;
+  background: rgba(61, 46, 31, 0.55);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.32s, visibility 0.32s;
+}
+.polaroid-overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.polaroid-stage {
+  background: var(--paper);
+  padding: 18px 18px 26px;
+  box-shadow: 8px 14px 0 rgba(0, 0, 0, 0.25), 0 0 80px rgba(0, 0, 0, 0.4);
+  transform: rotate(-2deg) scale(0.92) translateY(20px);
+  transition: transform 0.5s cubic-bezier(0.2, 1.5, 0.4, 1);
+  max-width: 92vw;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.polaroid-overlay.visible .polaroid-stage {
+  transform: rotate(-1.5deg) scale(1) translateY(0);
+}
+
+.polaroid-img {
+  display: block;
+  max-width: min(72vw, 700px);
+  max-height: 70vh;
+  height: auto;
+  width: auto;
+  border: 1px solid rgba(61, 46, 31, 0.18);
+}
+
+.polaroid-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+}
+.pol-btn {
+  padding: 9px 22px;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 16px;
+  cursor: none;
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: all 0.15s;
+}
+.pol-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.pol-btn.pol-save { background: var(--sun); }
+
+.polaroid-hint {
+  margin: 12px 0 0;
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  color: var(--ink);
+  opacity: 0.5;
+}
+
 /* ---------- Responsive: small / short screens ---------- */
 
 /* On any touch-only device, drop the custom cursor and graphite trail —

@@ -16,6 +16,7 @@ import { loadLayout, applySavedLayout, scheduleSave, clearLayout, loadMode, save
 import { showNote, hideNote } from './notes.js';
 import { setupMinimap, updateMinimap } from './minimap.js';
 import { setupSearch } from './search.js';
+import { setupPolaroid } from './polaroid.js';
 
 // Resolve absolute /asset paths under whatever base path the app is served at
 // (e.g. "/" in dev, "/drifting-atelier/" on GitHub Pages).
@@ -193,6 +194,7 @@ async function main() {
 
   setupMinimap({ zones: manifest.zones, onFlyTo: flyTo });
   setupSearch({ pieces, zones: manifest.zones, onFlyTo: flyTo });
+  setupPolaroid(app);
 
   // 9. Hide loading, show welcome — wire mode picker
   document.getElementById('loading').classList.add('hidden');
