@@ -1,0 +1,1034 @@
+{
+  "zones": [
+    {
+      "id": "cave",
+      "name": "The Cave",
+      "center": [
+        -3800,
+        -2700
+      ]
+    },
+    {
+      "id": "garden",
+      "name": "The Garden",
+      "center": [
+        3800,
+        -2700
+      ]
+    },
+    {
+      "id": "static",
+      "name": "The Static",
+      "center": [
+        -5800,
+        200
+      ]
+    },
+    {
+      "id": "hearth",
+      "name": "The Hearth",
+      "center": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "loose-ends",
+      "name": "Loose Ends",
+      "center": null
+    },
+    {
+      "id": "nursery",
+      "name": "The Nursery",
+      "center": [
+        5800,
+        200
+      ]
+    },
+    {
+      "id": "press",
+      "name": "The Press",
+      "center": [
+        -3800,
+        2900
+      ]
+    },
+    {
+      "id": "float",
+      "name": "The Float",
+      "center": [
+        200,
+        4600
+      ]
+    },
+    {
+      "id": "salon",
+      "name": "The Salon",
+      "center": [
+        3800,
+        2900
+      ]
+    }
+  ],
+  "pieces": [
+    {
+      "id": "b01-cave-handprint-stencil",
+      "zone": "cave",
+      "src": "/cave/B01_cave-handprint-stencil.png",
+      "w": 500,
+      "h": 600
+    },
+    {
+      "id": "b02-charcoal-bison",
+      "zone": "cave",
+      "src": "/cave/B02_charcoal-bison.png",
+      "w": 800,
+      "h": 500
+    },
+    {
+      "id": "b03-stick-figure-hunters",
+      "zone": "cave",
+      "src": "/cave/B03_stick-figure-hunters.png",
+      "w": 700,
+      "h": 500
+    },
+    {
+      "id": "b04-mammoth-silhouette",
+      "zone": "cave",
+      "src": "/cave/B04_mammoth-silhouette.png",
+      "w": 900,
+      "h": 600
+    },
+    {
+      "id": "b05-geometric-scratch-pattern",
+      "zone": "cave",
+      "src": "/cave/B05_geometric-scratch-pattern.png",
+      "w": 600,
+      "h": 600
+    },
+    {
+      "id": "b06-spiral-petroglyph",
+      "zone": "cave",
+      "src": "/cave/B06_spiral-petroglyph.png",
+      "w": 400,
+      "h": 400
+    },
+    {
+      "id": "b07-running-deer-herd",
+      "zone": "cave",
+      "src": "/cave/B07_running-deer-herd.png",
+      "w": 1000,
+      "h": 400
+    },
+    {
+      "id": "b08-constellation-dots",
+      "zone": "cave",
+      "src": "/cave/B08_constellation-dots.png",
+      "w": 500,
+      "h": 500
+    },
+    {
+      "id": "b09-aboriginal-style-turtle",
+      "zone": "cave",
+      "src": "/cave/B09_aboriginal-style-turtle.png",
+      "w": 600,
+      "h": 500
+    },
+    {
+      "id": "b10-egyptian-eye-of-horus",
+      "zone": "cave",
+      "src": "/cave/B10_egyptian-eye-of-horus.png",
+      "w": 500,
+      "h": 300
+    },
+    {
+      "id": "b11-hieroglyph-strip",
+      "zone": "cave",
+      "src": "/cave/B11_hieroglyph-strip.png",
+      "w": 1000,
+      "h": 200
+    },
+    {
+      "id": "b12-stone-tablet-fragment",
+      "zone": "cave",
+      "src": "/cave/B12_stone-tablet-fragment.png",
+      "w": 700,
+      "h": 500
+    },
+    {
+      "id": "c1-pressed-fern-frond",
+      "zone": "garden",
+      "src": "/garden/c1-pressed-fern-frond.png",
+      "w": 400,
+      "h": 900
+    },
+    {
+      "id": "c10-robins-egg-with-feather",
+      "zone": "garden",
+      "src": "/garden/c10-robins-egg-with-feather.png",
+      "w": 400,
+      "h": 400
+    },
+    {
+      "id": "c11-pressed-maple-leaf",
+      "zone": "garden",
+      "src": "/garden/c11-pressed-maple-leaf.png",
+      "w": 500,
+      "h": 500
+    },
+    {
+      "id": "c12-snail-shell-spiral",
+      "zone": "garden",
+      "src": "/garden/c12-snail-shell-spiral.png",
+      "w": 400,
+      "h": 400
+    },
+    {
+      "id": "c13-wildflower-bouquet-small",
+      "zone": "garden",
+      "src": "/garden/c13-wildflower-bouquet-small.png",
+      "w": 600,
+      "h": 600
+    },
+    {
+      "id": "c14-butterfly-wings-open",
+      "zone": "garden",
+      "src": "/garden/c14-butterfly-wings-open.png",
+      "w": 600,
+      "h": 500
+    },
+    {
+      "id": "c15-moth-specimen",
+      "zone": "garden",
+      "src": "/garden/c15-moth-specimen.png",
+      "w": 500,
+      "h": 500
+    },
+    {
+      "id": "c16-seed-packet-blank",
+      "zone": "garden",
+      "src": "/garden/c16-seed-packet-blank.png",
+      "w": 400,
+      "h": 550
+    },
+    {
+      "id": "c2-watercolor-peony",
+      "zone": "garden",
+      "src": "/garden/c2-watercolor-peony.png",
+      "w": 700,
+      "h": 700
+    },
+    {
+      "id": "c3-vintage-rose-study",
+      "zone": "garden",
+      "src": "/garden/c3-vintage-rose-study.png",
+      "w": 600,
+      "h": 800
+    },
+    {
+      "id": "c4-hummingbird-study",
+      "zone": "garden",
+      "src": "/garden/c4-hummingbird-study.png",
+      "w": 600,
+      "h": 500
+    },
+    {
+      "id": "c5-pressed-daisy-chain",
+      "zone": "garden",
+      "src": "/garden/c5-pressed-daisy-chain.png",
+      "w": 800,
+      "h": 200
+    },
+    {
+      "id": "c6-acorn-and-oak-leaf",
+      "zone": "garden",
+      "src": "/garden/c6-acorn-and-oak-leaf.png",
+      "w": 500,
+      "h": 500
+    },
+    {
+      "id": "c7-bee-anatomical-drawing",
+      "zone": "garden",
+      "src": "/garden/c7-bee-anatomical-drawing.png",
+      "w": 500,
+      "h": 400
+    },
+    {
+      "id": "c8-mushroom-cluster",
+      "zone": "garden",
+      "src": "/garden/c8-mushroom-cluster.png",
+      "w": 700,
+      "h": 600
+    },
+    {
+      "id": "c9-lavender-sprig",
+      "zone": "garden",
+      "src": "/garden/c9-lavender-sprig.png",
+      "w": 300,
+      "h": 800
+    },
+    {
+      "id": "h10-punk-pin-button",
+      "zone": "static",
+      "src": "/h-static/H10_punk_pin_button.png",
+      "w": 300,
+      "h": 300
+    },
+    {
+      "id": "h11-polaroid-dog",
+      "zone": "static",
+      "src": "/h-static/H11_polaroid_dog.png",
+      "w": 500,
+      "h": 600
+    },
+    {
+      "id": "h13-receipt-with-sketch",
+      "zone": "static",
+      "src": "/h-static/H13_receipt_with_sketch.png",
+      "w": 300,
+      "h": 600
+    },
+    {
+      "id": "h14-ribbon-scrap",
+      "zone": "static",
+      "src": "/h-static/H14_ribbon_scrap.png",
+      "w": 400,
+      "h": 80
+    },
+    {
+      "id": "h1-polaroid-blank",
+      "zone": "static",
+      "src": "/h-static/H1_polaroid_blank.png",
+      "w": 500,
+      "h": 600
+    },
+    {
+      "id": "h2-polaroid-hands",
+      "zone": "static",
+      "src": "/h-static/H2_polaroid_hands.png",
+      "w": 500,
+      "h": 600
+    },
+    {
+      "id": "h3-polaroid-empty-room",
+      "zone": "static",
+      "src": "/h-static/H3_polaroid_empty_room.png",
+      "w": 500,
+      "h": 600
+    },
+    {
+      "id": "h4-cassette-tape",
+      "zone": "static",
+      "src": "/h-static/H4_cassette_tape.png",
+      "w": 600,
+      "h": 400
+    },
+    {
+      "id": "h5-vinyl-record-sleeve",
+      "zone": "static",
+      "src": "/h-static/H5_vinyl_record_sleeve.png",
+      "w": 700,
+      "h": 700
+    },
+    {
+      "id": "h6-graffiti-tag-scrap",
+      "zone": "static",
+      "src": "/h-static/H6_graffiti_tag_scrap.png",
+      "w": 600,
+      "h": 400
+    },
+    {
+      "id": "h7-disposable-camera-photo-strip",
+      "zone": "static",
+      "src": "/h-static/H7_disposable_camera_photo_strip.png",
+      "w": 400,
+      "h": 900
+    },
+    {
+      "id": "h8-zine-page",
+      "zone": "static",
+      "src": "/h-static/H8_zine_page.png",
+      "w": 600,
+      "h": 800
+    },
+    {
+      "id": "h9-sticker-pack-scattered",
+      "zone": "static",
+      "src": "/h-static/H9_sticker_pack_scattered.png",
+      "w": 700,
+      "h": 500
+    },
+    {
+      "id": "a10-brass-thumbtack",
+      "zone": "hearth",
+      "src": "/hearth/A10_brass_thumbtack.png",
+      "w": 160,
+      "h": 160
+    },
+    {
+      "id": "a11-silver-paperclip",
+      "zone": "hearth",
+      "src": "/hearth/A11_silver_paperclip.png",
+      "w": 400,
+      "h": 240
+    },
+    {
+      "id": "a12-postage-stamp-blank",
+      "zone": "hearth",
+      "src": "/hearth/A12_postage_stamp_blank.png",
+      "w": 700,
+      "h": 900
+    },
+    {
+      "id": "a13-wax-seal-red",
+      "zone": "hearth",
+      "src": "/hearth/A13_wax_seal_red.png",
+      "w": 500,
+      "h": 500
+    },
+    {
+      "id": "a14-loose-feather-quill",
+      "zone": "hearth",
+      "src": "/hearth/A14_loose_feather_quill.png",
+      "w": 1200,
+      "h": 400
+    },
+    {
+      "id": "a1-welcome-scroll-partially-unrolled",
+      "zone": "hearth",
+      "src": "/hearth/A1_welcome_scroll_partially_unrolled.png",
+      "w": 1800,
+      "h": 1200
+    },
+    {
+      "id": "a2-open-leather-sketchbook",
+      "zone": "hearth",
+      "src": "/hearth/A2_open_leather_sketchbook.png",
+      "w": 1600,
+      "h": 1100
+    },
+    {
+      "id": "a3-coffee-mug-ring-stain",
+      "zone": "hearth",
+      "src": "/hearth/A3_coffee_mug_ring_stain.png",
+      "w": 800,
+      "h": 800
+    },
+    {
+      "id": "a4-cluster-of-graphite-pencils",
+      "zone": "hearth",
+      "src": "/hearth/A4_cluster_of_graphite_pencils.png",
+      "w": 1200,
+      "h": 400
+    },
+    {
+      "id": "a5-brass-compass-open",
+      "zone": "hearth",
+      "src": "/hearth/A5_brass_compass_open.png",
+      "w": 1000,
+      "h": 1000
+    },
+    {
+      "id": "a6-studio-logo-stamp",
+      "zone": "hearth",
+      "src": "/hearth/A6_studio_logo_stamp.png",
+      "w": 1200,
+      "h": 600
+    },
+    {
+      "id": "a7-washi-tape-strip-yellow",
+      "zone": "hearth",
+      "src": "/hearth/A7_washi_tape_strip_yellow.png",
+      "w": 600,
+      "h": 160
+    },
+    {
+      "id": "a8-washi-tape-strip-sage",
+      "zone": "hearth",
+      "src": "/hearth/A8_washi_tape_strip_sage.png",
+      "w": 600,
+      "h": 160
+    },
+    {
+      "id": "a9-washi-tape-strip-rose",
+      "zone": "hearth",
+      "src": "/hearth/A9_washi_tape_strip_rose.png",
+      "w": 600,
+      "h": 160
+    },
+    {
+      "id": "i10-watercolor-swatch-grid",
+      "zone": "loose-ends",
+      "src": "/loose-ends/I10_watercolor_swatch_grid.png",
+      "w": 600,
+      "h": 200
+    },
+    {
+      "id": "i11-pencil-shaving",
+      "zone": "loose-ends",
+      "src": "/loose-ends/I11_pencil_shaving.png",
+      "w": 300,
+      "h": 300
+    },
+    {
+      "id": "i12-coffee-bean-trio",
+      "zone": "loose-ends",
+      "src": "/loose-ends/I12_coffee_bean_trio.png",
+      "w": 300,
+      "h": 200
+    },
+    {
+      "id": "i13-matchbook",
+      "zone": "loose-ends",
+      "src": "/loose-ends/I13_matchbook.png",
+      "w": 400,
+      "h": 300
+    },
+    {
+      "id": "i14-postcard-back",
+      "zone": "loose-ends",
+      "src": "/loose-ends/I14_postcard_back.png",
+      "w": 700,
+      "h": 500
+    },
+    {
+      "id": "i15-old-photograph-corner",
+      "zone": "loose-ends",
+      "src": "/loose-ends/I15_old_photograph_corner.png",
+      "w": 400,
+      "h": 500
+    },
+    {
+      "id": "i16-doodle-scrap",
+      "zone": "loose-ends",
+      "src": "/loose-ends/I16_doodle_scrap.png",
+      "w": 400,
+      "h": 400
+    },
+    {
+      "id": "i1-sticky-note-yellow",
+      "zone": "loose-ends",
+      "src": "/loose-ends/I1_sticky_note_yellow.png",
+      "w": 400,
+      "h": 400
+    },
+    {
+      "id": "i2-sticky-note-pink",
+      "zone": "loose-ends",
+      "src": "/loose-ends/I2_sticky_note_pink.png",
+      "w": 400,
+      "h": 400
+    },
+    {
+      "id": "i3-napkin-sketch-face",
+      "zone": "loose-ends",
+      "src": "/loose-ends/I3_napkin_sketch_face.png",
+      "w": 500,
+      "h": 500
+    },
+    {
+      "id": "i4-restaurant-receipt",
+      "zone": "loose-ends",
+      "src": "/loose-ends/I4_restaurant_receipt.png",
+      "w": 300,
+      "h": 500
+    },
+    {
+      "id": "i5-fortune-cookie-slip",
+      "zone": "loose-ends",
+      "src": "/loose-ends/I5_fortune_cookie_slip.png",
+      "w": 500,
+      "h": 150
+    },
+    {
+      "id": "i6-subway-ticket",
+      "zone": "loose-ends",
+      "src": "/loose-ends/I6_subway_ticket.png",
+      "w": 500,
+      "h": 200
+    },
+    {
+      "id": "i7-dried-four-leaf-clover",
+      "zone": "loose-ends",
+      "src": "/loose-ends/I7_dried_four_leaf_clover.png",
+      "w": 300,
+      "h": 300
+    },
+    {
+      "id": "i8-ink-blot",
+      "zone": "loose-ends",
+      "src": "/loose-ends/I8_ink_blot.png",
+      "w": 400,
+      "h": 400
+    },
+    {
+      "id": "i9-folded-paper-airplane",
+      "zone": "loose-ends",
+      "src": "/loose-ends/I9_folded_paper_airplane.png",
+      "w": 500,
+      "h": 400
+    },
+    {
+      "id": "d01-crayon-dragon",
+      "zone": "nursery",
+      "src": "/nursery/D01-crayon-dragon.png",
+      "w": 800,
+      "h": 600
+    },
+    {
+      "id": "d02-stick-figure-family",
+      "zone": "nursery",
+      "src": "/nursery/D02-stick-figure-family.png",
+      "w": 700,
+      "h": 600
+    },
+    {
+      "id": "d03-finger-paint-handprint",
+      "zone": "nursery",
+      "src": "/nursery/D03-finger-paint-handprint.png",
+      "w": 500,
+      "h": 500
+    },
+    {
+      "id": "d04-crayon-rocket-ship",
+      "zone": "nursery",
+      "src": "/nursery/D04-crayon-rocket-ship.png",
+      "w": 600,
+      "h": 800
+    },
+    {
+      "id": "d05-marker-rainbow",
+      "zone": "nursery",
+      "src": "/nursery/D05-marker-rainbow.png",
+      "w": 700,
+      "h": 400
+    },
+    {
+      "id": "d06-mom-letter-drawing",
+      "zone": "nursery",
+      "src": "/nursery/D06-mom-letter-drawing.png",
+      "w": 500,
+      "h": 600
+    },
+    {
+      "id": "d07-scribble-abstraction",
+      "zone": "nursery",
+      "src": "/nursery/D07-scribble-abstraction.png",
+      "w": 600,
+      "h": 600
+    },
+    {
+      "id": "d08-cat-with-three-legs",
+      "zone": "nursery",
+      "src": "/nursery/D08-cat-with-three-legs.png",
+      "w": 600,
+      "h": 500
+    },
+    {
+      "id": "d09-house-with-chimney",
+      "zone": "nursery",
+      "src": "/nursery/D09-house-with-chimney.png",
+      "w": 700,
+      "h": 600
+    },
+    {
+      "id": "d10-glittery-princess-sticker",
+      "zone": "nursery",
+      "src": "/nursery/D10-glittery-princess-sticker.png",
+      "w": 400,
+      "h": 500
+    },
+    {
+      "id": "d11-dinosaur-scribble",
+      "zone": "nursery",
+      "src": "/nursery/D11-dinosaur-scribble.png",
+      "w": 700,
+      "h": 500
+    },
+    {
+      "id": "d12-heart-with-arrow",
+      "zone": "nursery",
+      "src": "/nursery/D12-heart-with-arrow.png",
+      "w": 400,
+      "h": 400
+    },
+    {
+      "id": "d13-smiley-sun",
+      "zone": "nursery",
+      "src": "/nursery/D13-smiley-sun.png",
+      "w": 500,
+      "h": 500
+    },
+    {
+      "id": "d14-i-love-you-note",
+      "zone": "nursery",
+      "src": "/nursery/D14-i-love-you-note.png",
+      "w": 600,
+      "h": 400
+    },
+    {
+      "id": "g1-bauhaus-geometric-poster",
+      "zone": "press",
+      "src": "/press/G1-bauhaus-geometric-poster.png",
+      "w": 700,
+      "h": 900
+    },
+    {
+      "id": "g12-movie-ticket-stub",
+      "zone": "press",
+      "src": "/press/G12-movie-ticket-stub.png",
+      "w": 400,
+      "h": 200
+    },
+    {
+      "id": "g2-art-deco-jazz-poster",
+      "zone": "press",
+      "src": "/press/G2-art-deco-jazz-poster.png",
+      "w": 700,
+      "h": 1000
+    },
+    {
+      "id": "g3-japanese-woodblock-wave",
+      "zone": "press",
+      "src": "/press/G3-japanese-woodblock-wave.png",
+      "w": 800,
+      "h": 600
+    },
+    {
+      "id": "g4-soviet-constructivist-poster",
+      "zone": "press",
+      "src": "/press/G4-soviet-constructivist-poster.png",
+      "w": 700,
+      "h": 1000
+    },
+    {
+      "id": "g5-toulouse-lautrec-dancer",
+      "zone": "press",
+      "src": "/press/G5-toulouse-lautrec-dancer.png",
+      "w": 700,
+      "h": 1000
+    },
+    {
+      "id": "g6-ukiyo-e-geisha",
+      "zone": "press",
+      "src": "/press/G6-ukiyo-e-geisha.png",
+      "w": 600,
+      "h": 900
+    },
+    {
+      "id": "g7-bread-propaganda-poster",
+      "zone": "press",
+      "src": "/press/G7-bread-propaganda-poster.png",
+      "w": 700,
+      "h": 900
+    },
+    {
+      "id": "g8-linocut-bird",
+      "zone": "press",
+      "src": "/press/G8-linocut-bird.png",
+      "w": 600,
+      "h": 600
+    },
+    {
+      "id": "g9-concert-flyer-torn",
+      "zone": "press",
+      "src": "/press/G9-concert-flyer-torn.png",
+      "w": 600,
+      "h": 800
+    },
+    {
+      "id": "f1-floating-bowler-hat-400x400",
+      "zone": "float",
+      "src": "/the-float/f1-floating-bowler-hat-400x400.png",
+      "w": 400,
+      "h": 400
+    },
+    {
+      "id": "f10-hand-holding-star-500x500",
+      "zone": "float",
+      "src": "/the-float/f10-hand-holding-star-500x500.png",
+      "w": 500,
+      "h": 500
+    },
+    {
+      "id": "f11-stairs-leading-nowhere-600x800",
+      "zone": "float",
+      "src": "/the-float/f11-stairs-leading-nowhere-600x800.png",
+      "w": 600,
+      "h": 800
+    },
+    {
+      "id": "f12-single-eye-with-lashes-400x300",
+      "zone": "float",
+      "src": "/the-float/f12-single-eye-with-lashes-400x300.png",
+      "w": 400,
+      "h": 300
+    },
+    {
+      "id": "f2-green-apple-with-eye-500x500",
+      "zone": "float",
+      "src": "/the-float/f2-green-apple-with-eye-500x500.png",
+      "w": 500,
+      "h": 500
+    },
+    {
+      "id": "f3-melting-pocket-watch-600x500",
+      "zone": "float",
+      "src": "/the-float/f3-melting-pocket-watch-600x500.png",
+      "w": 600,
+      "h": 500
+    },
+    {
+      "id": "f4-cloud-face-700x500",
+      "zone": "float",
+      "src": "/the-float/f4-cloud-face-700x500.png",
+      "w": 700,
+      "h": 500
+    },
+    {
+      "id": "f5-door-floating-in-sky-600x800",
+      "zone": "float",
+      "src": "/the-float/f5-door-floating-in-sky-600x800.png",
+      "w": 600,
+      "h": 800
+    },
+    {
+      "id": "f6-levitating-chess-queen-400x600",
+      "zone": "float",
+      "src": "/the-float/f6-levitating-chess-queen-400x600.png",
+      "w": 400,
+      "h": 600
+    },
+    {
+      "id": "f7-origami-crane-glowing-500x400",
+      "zone": "float",
+      "src": "/the-float/f7-origami-crane-glowing-500x400.png",
+      "w": 500,
+      "h": 400
+    },
+    {
+      "id": "f8-tiny-vintage-hot-air-balloon-300x400",
+      "zone": "float",
+      "src": "/the-float/f8-tiny-vintage-hot-air-balloon-300x400.png",
+      "w": 300,
+      "h": 400
+    },
+    {
+      "id": "f9-fish-swimming-in-air-500x300",
+      "zone": "float",
+      "src": "/the-float/f9-fish-swimming-in-air-500x300.png",
+      "w": 500,
+      "h": 300
+    },
+    {
+      "id": "e10-architectural-sketch",
+      "zone": "salon",
+      "src": "/the-salon/E10_architectural-sketch.png",
+      "w": 800,
+      "h": 600
+    },
+    {
+      "id": "e11-botanical-engraving",
+      "zone": "salon",
+      "src": "/the-salon/E11_botanical-engraving.png",
+      "w": 600,
+      "h": 800
+    },
+    {
+      "id": "e12-royal-portrait-miniature",
+      "zone": "salon",
+      "src": "/the-salon/E12_royal-portrait-miniature.png",
+      "w": 400,
+      "h": 500
+    },
+    {
+      "id": "e13-cupid-and-psyche-fragment",
+      "zone": "salon",
+      "src": "/the-salon/E13_cupid-and-psyche-fragment.png",
+      "w": 700,
+      "h": 800
+    },
+    {
+      "id": "e14-sealed-letter-with-ribbon",
+      "zone": "salon",
+      "src": "/the-salon/E14_sealed-letter-with-ribbon.png",
+      "w": 500,
+      "h": 400
+    },
+    {
+      "id": "e2-anatomical-hand-study",
+      "zone": "salon",
+      "src": "/the-salon/E2_anatomical-hand-study.png",
+      "w": 700,
+      "h": 700
+    },
+    {
+      "id": "e3-cherub-putto",
+      "zone": "salon",
+      "src": "/the-salon/E3_cherub-putto.png",
+      "w": 600,
+      "h": 700
+    },
+    {
+      "id": "e4-drapery-study",
+      "zone": "salon",
+      "src": "/the-salon/E4_drapery-study.png",
+      "w": 700,
+      "h": 900
+    },
+    {
+      "id": "e5-marble-bust-profile",
+      "zone": "salon",
+      "src": "/the-salon/E5_marble-bust-profile.png",
+      "w": 600,
+      "h": 800
+    },
+    {
+      "id": "e6-vanitas-skull-with-flower",
+      "zone": "salon",
+      "src": "/the-salon/E6_vanitas-skull-with-flower.png",
+      "w": 700,
+      "h": 700
+    },
+    {
+      "id": "e7-floral-still-life",
+      "zone": "salon",
+      "src": "/the-salon/E7_floral-still-life.png",
+      "w": 700,
+      "h": 800
+    },
+    {
+      "id": "e8-charcoal-nude-figure-study",
+      "zone": "salon",
+      "src": "/the-salon/E8_charcoal-nude-figure-study.png",
+      "w": 600,
+      "h": 900
+    },
+    {
+      "id": "e9-renaissance-map-fragment",
+      "zone": "salon",
+      "src": "/the-salon/E9_renaissance-map-fragment.png",
+      "w": 800,
+      "h": 700
+    }
+  ],
+  "ui": {
+    "pencil-cursor": {
+      "src": "/j-ui-elements/j1-pencil-cursor.png",
+      "w": 80,
+      "h": 80
+    },
+    "tooltip-card": {
+      "src": "/j-ui-elements/j10-tooltip-card.png",
+      "w": 600,
+      "h": 300
+    },
+    "loading-sketch-frame-01": {
+      "src": "/j-ui-elements/j11-loading-sketch-frame-01.png",
+      "w": 200,
+      "h": 200
+    },
+    "loading-sketch-frame-02": {
+      "src": "/j-ui-elements/j11-loading-sketch-frame-02.png",
+      "w": 200,
+      "h": 200
+    },
+    "loading-sketch-frame-03": {
+      "src": "/j-ui-elements/j11-loading-sketch-frame-03.png",
+      "w": 200,
+      "h": 200
+    },
+    "loading-sketch-frame-04": {
+      "src": "/j-ui-elements/j11-loading-sketch-frame-04.png",
+      "w": 200,
+      "h": 200
+    },
+    "loading-sketch-frame-05": {
+      "src": "/j-ui-elements/j11-loading-sketch-frame-05.png",
+      "w": 200,
+      "h": 200
+    },
+    "loading-sketch-frame-06": {
+      "src": "/j-ui-elements/j11-loading-sketch-frame-06.png",
+      "w": 200,
+      "h": 200
+    },
+    "site-logo-wordmark": {
+      "src": "/j-ui-elements/j12-site-logo-wordmark.png",
+      "w": 800,
+      "h": 300
+    },
+    "hand-grab-cursor": {
+      "src": "/j-ui-elements/j2-hand-grab-cursor.png",
+      "w": 80,
+      "h": 80
+    },
+    "magnifying-glass-icon": {
+      "src": "/j-ui-elements/j3-magnifying-glass-icon.png",
+      "w": 200,
+      "h": 200
+    },
+    "compass-rose-decorative": {
+      "src": "/j-ui-elements/j4-compass-rose-decorative.png",
+      "w": 400,
+      "h": 400
+    },
+    "plus-stamp": {
+      "src": "/j-ui-elements/j5-plus-stamp.png",
+      "w": 150,
+      "h": 150
+    },
+    "minus-stamp": {
+      "src": "/j-ui-elements/j6-minus-stamp.png",
+      "w": 150,
+      "h": 150
+    },
+    "reset-arrow-icon": {
+      "src": "/j-ui-elements/j7-reset-arrow-icon.png",
+      "w": 150,
+      "h": 150
+    },
+    "sound-ear-icon": {
+      "src": "/j-ui-elements/j8-sound-ear-icon.png",
+      "w": 150,
+      "h": 150
+    },
+    "speech-bubble-blank": {
+      "src": "/j-ui-elements/j9-speech-bubble-blank.png",
+      "w": 500,
+      "h": 400
+    }
+  },
+  "backgrounds": {
+    "cream-paper-texture": {
+      "src": "/k-background/k1-cream-paper-texture.png",
+      "w": 1024,
+      "h": 1024
+    },
+    "aged-paper-edge": {
+      "src": "/k-background/k2-aged-paper-edge.png",
+      "w": 2000,
+      "h": 400
+    },
+    "sunlight-beam-overlay": {
+      "src": "/k-background/k3-sunlight-beam-overlay.png",
+      "w": 1600,
+      "h": 900
+    },
+    "paper-shadow-gradient": {
+      "src": "/k-background/k4-paper-shadow-gradient.png",
+      "w": 1024,
+      "h": 1024
+    },
+    "hidden-mega-eye-pencil": {
+      "src": "/k-background/k5-hidden-mega-eye-pencil.png",
+      "w": 4000,
+      "h": 4000
+    },
+    "ladybug-walking-sprite-sheet": {
+      "src": "/k-background/k6-ladybug-walking-sprite-sheet.png",
+      "w": 800,
+      "h": 100
+    }
+  }
+}
